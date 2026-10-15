@@ -1,15 +1,44 @@
-import { Command } from 'commander';
-const program = new Command();
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+/**
+yargs()
+  .scriptName("pirate-parser")
+  .usage('$0 <cmd> [args]')
+  .command('hello [name]', 'welcome ter yargs!', (yargs) => {
+    yargs.positional('name', {
+      type: 'string',
+      default: 'Cambi',
+      describe: 'the name to say hello to'
+    })
+  }, function (argv) {
+    console.log('hello', argv.name, 'welcome to yargs!')
+  })
+  .help()
+  .parse(hideBin(process.argv))  
 
-program
-  .option('-d, --debug', 'output extra debugging')
-  .option('-s, --small', 'small pizza size')
-  .option('-p, --pizza-type <type>', 'flavour of pizza');
+const argv = yargs(hideBin(process.argv))
+  .option('name', {
+    alias: 'n',
+    demandOption: true,
+    describe: 'this is a name',
+    type: 'string'
+  })
+  .argv
+console.log(`Hello ${argv.name}!`);  **/
 
-program.parse(process.argv);
-
-const options = program.opts();
-if (options.debug) console.log(options);
-console.log('pizza details:');
-if (options.small) console.log('- small pizza size');
-if (options.pizzaType) console.log(`- ${options.pizzaType}`);
+yargs(hideBin(process.argv))
+  .command('add <task>', 'Add a new task', (yargs) => {
+    return yargs.positional('task', {
+      describe: 'Task description',
+      type: 'string'
+    });
+  }, (argv) => {
+    console.log(`Adding new task: ${argv.task}`);
+  })
+  .command('list', 'List all tasks', () => {
+    console.log('Listing tasks...');
+    // Code to list tasks here
+  })
+  .demandCommand(1, 'You need at least one command before moving on')
+  .help()
+  .argv;
