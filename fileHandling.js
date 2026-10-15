@@ -1,18 +1,24 @@
 import {readFile, writeFile} from 'node:fs/promises';
 
 const fileName = './expense.csv'
-async function handleFile() {
+async function readFile() {
   try {
-    const response = await readFile(fileName, 'utf-8');
+    const response = await fs.readFile(fileName, 'utf-8');
 
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
 
-    const parseData = JSON.parse(response);
-    const contentData = await writeFile(fileName, JSON.stringify(parseData, null, 2));
-    console.log(`csv file saved successfully!`);
+    return JSON.parse(response);
   } catch (err) {
     console.error(`Problem: ${err}`);
+    return [];
   }
 }
+
+async function writeFile() {
+  const contentData = await writeFile(fileName, JSON.stringify(parseData, null, 2));
+  console.log(`csv file saved successfully!`);
+}
+
+export { readFile, writeFile }
