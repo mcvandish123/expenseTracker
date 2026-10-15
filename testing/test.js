@@ -24,7 +24,7 @@ const argv = yargs(hideBin(process.argv))
     type: 'string'
   })
   .argv
-console.log(`Hello ${argv.name}!`);  **/
+console.log(`Hello ${argv.name}!`);  
 
 yargs(hideBin(process.argv))
   .command('add <task>', 'Add a new task', (yargs) => {
@@ -41,4 +41,21 @@ yargs(hideBin(process.argv))
   })
   .demandCommand(1, 'You need at least one command before moving on')
   .help()
-  .argv;
+  .argv;**/
+
+const argv = yargs()
+  .command('get', 'make a get HTTP request', function (yargs, helpOrVersionSet) {
+    return yargs.option('url', {
+      alias: 'u',
+      default: 'http://yargs.js.org/'
+    })
+    .option('description', {
+      alias: 'd',
+      describe: 'this is a description',
+      demandOption: 'true',
+      type: 'string'
+    })
+  })
+  .help()
+  .parse(hideBin(process.argv))
+  console.log(`${argv.url} ${argv.description}`);
