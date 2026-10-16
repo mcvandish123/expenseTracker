@@ -1,14 +1,39 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { readFile, writeFile } from './fileHandling.js'
+import { loadExpense, saveExpense } from './readWriteFile/fileHandling.js'
 
-function dataExpenses() {
+const events = new Date().toISOString();
+
+function addExpenses(expenseData, argv) {
+   const data = {
+    id: 0,
+    description: argv.description,
+    amount: argv.amount,
+    date: events
+   }
+
+   const dataId = expenseData.length > 0 ? Math.max(...expenseData.map(expense => expense.id)) + 1 : 1;
+   data.id = dataId;
+   expenseData.push(data);
+   saveExpense(expenseData);
+}
+
+function listExpenses() {
   
 }
 
+function deleteExpenses() {
+
+}
+
+function summaryExpenses() {
+  
+}
  
-function parsingCheck() {
+async function parseChecking() {
+  const expenseData = await loadExpense();
+
   const argv = yargs(hideBin(process.argv))
   .command('add', 'adding of both options', (yargs) => {
     return yargs.option('description', {
@@ -24,11 +49,15 @@ function parsingCheck() {
       type: 'number'
     });
   }, ((argv) => {
+
+    addExpenses(expenseData, argv);
     console.log(`${argv.description} ${argv.amount}`)
   }))
 
   .command('list', 'list of all the commands', () => {}, 
-  (argv) => {console.log('Lists of all expenses:')})
+  ((argv) => {
+    listExpenses();
+    console.log('Lists of all expenses:')}))
 
   .command('delete', 'deletes a specific expense', (yargs) => {
     return yargs.option('id', {
@@ -37,7 +66,9 @@ function parsingCheck() {
       demandOption: 'true',
       type: 'number'
     })
-  }, (argv) => { console.log(`deleted an ID: ${argv.id}`)})
+  }, ((argv) => {
+    deleteExpenses();
+    console.log(`deleted an ID: ${argv.id}`)}))
 
   .command('summary', 'summary of all expenses', (yargs) => {
     return yargs.option('month', {
@@ -47,6 +78,7 @@ function parsingCheck() {
     });
   },
   ((argv) => {
+    summaryExpenses();
     if (!argv.month) {
       console.log('Lists of all expenses');
     } else {
@@ -58,7 +90,7 @@ function parsingCheck() {
 
 }
 
-parsingCheck();
+parseChecking();
 
 
 
