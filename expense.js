@@ -19,8 +19,12 @@ function addExpenses(expenseData, argv) {
    saveExpense(expenseData);
 }
 
-function listExpenses() {
-  
+function listExpenses(expenseData) {
+  console.log('LISTS OF ALL EXPENSES:')
+  console.log('ID:'.padEnd(5) + 'Description'.padEnd(30) + 'Amount')
+  expenseData.map(({id, description, amount}) => {
+    console.log(String(id).padEnd(5) + description.padEnd(30) + amount);
+  });
 }
 
 function deleteExpenses() {
@@ -55,9 +59,7 @@ async function parseChecking() {
   }))
 
   .command('list', 'list of all the commands', () => {}, 
-  ((argv) => {
-    listExpenses();
-    console.log('Lists of all expenses:')}))
+    () => {listExpenses(expenseData);})
 
   .command('delete', 'deletes a specific expense', (yargs) => {
     return yargs.option('id', {

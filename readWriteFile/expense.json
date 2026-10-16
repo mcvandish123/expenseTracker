@@ -10,5 +10,29 @@
     "description": "clothes",
     "amount": 20,
     "date": "2026-10-16T05:51:24.291Z"
+  },
+  {
+    "id": 3,
+    "description": "pinakbet",
+    "amount": 100,
+    "date": "2026-10-16T06:23:12.929Z"
+  },
+  {
+    "id": 4,
+    "description": "",
+    "amount": 100,
+    "date": "2026-10-16T07:03:00.477Z"
+  },
+  {
+    "id": 5,
+    "description": "hello world",
+    "amount": 20,
+    "date": "2026-10-16T07:05:39.945Z"
+  },
+  {
+    "id": 6,
+    "description": "hello world. It's a good day",
+    "amount": 20,
+    "date": "2026-10-16T07:05:57.873Z"
   }
 ]
