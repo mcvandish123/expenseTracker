@@ -3,7 +3,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { loadExpense, saveExpense } from './readWriteFile/fileHandling.js'
 
-const events = new Date().toISOString();
+const events = new Date().toISOString;
 
 function addExpenses(expenseData, argv) {
    const data = {
@@ -17,6 +17,7 @@ function addExpenses(expenseData, argv) {
    data.id = dataId;
    expenseData.push(data);
    saveExpense(expenseData);
+   console.log(`Expense added successfully (ID: ${data.id}})`)
 }
 
 function listExpenses(expenseData) {
@@ -27,12 +28,31 @@ function listExpenses(expenseData) {
   });
 }
 
-function deleteExpenses() {
+function deleteExpenses(expenseData, argv) {
+  const idArgv = argv.id;
+  const expenseId = expenseData.findIndex(expense => expense.id === Number(idArgv));
 
+  if (expenseId !== -1) {
+    expenseData.splice(expenseId, 1);
+    saveExpense(expenseData);
+    console.log(`deleted ID: ${idArgv}`);
+  } else {
+    console.log('must be a positive number');
+  }
 }
 
-function summaryExpenses() {
-  
+function summaryExpenses(expenseData) {
+  const summary = Object.values(expenseData).reduce((acc, expense) => acc + expense.amount, 0);
+
+  console.log(`Total expenses: $${summary}`);
+}
+
+function summaryExpenseMonth(expenseData, argv) {
+  const monthExpenses = expenseData.filter(
+    expense => new Date(expense.date).getMonth() + 1 === argv.month 
+  );
+  const totalExpenses = monthExpenses.reduce((acc, month) => acc + month.amount, 0);
+  console.log(`Total expenses for ${argv.month}: $${totalExpenses}`);
 }
  
 async function parseChecking() {
@@ -53,9 +73,7 @@ async function parseChecking() {
       type: 'number'
     });
   }, ((argv) => {
-
     addExpenses(expenseData, argv);
-    console.log(`${argv.description} ${argv.amount}`)
   }))
 
   .command('list', 'list of all the commands', () => {}, 
@@ -69,8 +87,7 @@ async function parseChecking() {
       type: 'number'
     })
   }, ((argv) => {
-    deleteExpenses();
-    console.log(`deleted an ID: ${argv.id}`)}))
+    deleteExpenses(expenseData, argv);}))
 
   .command('summary', 'summary of all expenses', (yargs) => {
     return yargs.option('month', {
@@ -80,11 +97,10 @@ async function parseChecking() {
     });
   },
   ((argv) => {
-    summaryExpenses();
     if (!argv.month) {
-      console.log('Lists of all expenses');
+      summaryExpenses(expenseData);
     } else {
-      console.log(`expenses for the month of ${argv.month}: `)
+      summaryExpenseMonth(expenseData, argv)
     }
   }))
   .help()

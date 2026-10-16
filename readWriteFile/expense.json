@@ -1,38 +1,38 @@
 [
   {
     "id": 1,
-    "description": "clothes",
-    "amount": 20,
-    "date": "2026-10-16T05:50:14.441Z"
+    "description": "boomerang",
+    "amount": 120,
+    "date": "2026-10-16T12:25:25.338Z"
   },
   {
     "id": 2,
-    "description": "clothes",
-    "amount": 20,
-    "date": "2026-10-16T05:51:24.291Z"
+    "description": "boomerang",
+    "amount": 120,
+    "date": "2026-10-16T12:25:46.640Z"
   },
   {
     "id": 3,
-    "description": "pinakbet",
-    "amount": 100,
-    "date": "2026-10-16T06:23:12.929Z"
+    "description": "boomerang",
+    "amount": 120,
+    "date": "2026-10-16T12:26:33.465Z"
   },
   {
     "id": 4,
-    "description": "",
-    "amount": 100,
-    "date": "2026-10-16T07:03:00.477Z"
+    "description": "sword",
+    "amount": 120,
+    "date": "2026-10-16T12:26:49.956Z"
   },
   {
     "id": 5,
-    "description": "hello world",
+    "description": "horse",
     "amount": 20,
-    "date": "2026-10-16T07:05:39.945Z"
+    "date": "2026-10-16T13:02:59.016Z"
   },
   {
     "id": 6,
-    "description": "hello world. It's a good day",
-    "amount": 20,
-    "date": "2026-10-16T07:05:57.873Z"
+    "description": "socks",
+    "amount": 1000,
+    "date": "2026-05-16T13:02:59.016Z"
   }
 ]
